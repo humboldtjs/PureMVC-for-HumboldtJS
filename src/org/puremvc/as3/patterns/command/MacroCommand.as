@@ -4,12 +4,12 @@
 */
 package org.puremvc.as3.patterns.command 
 {
-	import org.puremvc.as3.interfaces.ICommand;
-	import org.puremvc.as3.interfaces.INotification;
-	import org.puremvc.as3.interfaces.INotifier;
-	import org.puremvc.as3.patterns.observer.Notifier;
-	
-	/**
+    import org.puremvc.as3.interfaces.ICommand;
+    import org.puremvc.as3.interfaces.INotification;
+    import org.puremvc.as3.interfaces.INotifier;
+    import org.puremvc.as3.patterns.observer.Notifier;
+
+    /**
 	 * A base <code>ICommand</code> implementation that executes other <code>ICommand</code>s.
 	 *  
 	 * <P>
@@ -55,8 +55,9 @@ package org.puremvc.as3.patterns.command
 		 */
 		public function MacroCommand()
 		{
+			super();
 			subCommands = new Array();
-			initializeMacroCommand();			
+			initializeMacroCommand();
 		}
 		
 		/**

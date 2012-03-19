@@ -14,7 +14,7 @@ package org.puremvc.as3.interfaces
 		/**
 		 * Execute the <code>ICommand</code>'s logic to handle a given <code>INotification</code>.
 		 * 
-		 * @param note an <code>INotification</code> to handle.
+		 * @param notification an <code>INotification</code> to handle.
 		 */
 		function execute( notification:INotification ) : void;
 	}
