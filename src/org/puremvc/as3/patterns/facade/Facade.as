@@ -4,9 +4,16 @@
 */
 package org.puremvc.as3.patterns.facade
 {
-
-	import org.puremvc.as3.core.*;
-	import org.puremvc.as3.interfaces.*;
+	import org.puremvc.as3.core.Controller;
+	import org.puremvc.as3.core.Model;
+	import org.puremvc.as3.core.View;
+	import org.puremvc.as3.interfaces.IController;
+	import org.puremvc.as3.interfaces.IFacade;
+	import org.puremvc.as3.interfaces.IMediator;
+	import org.puremvc.as3.interfaces.IModel;
+	import org.puremvc.as3.interfaces.INotification;
+	import org.puremvc.as3.interfaces.IProxy;
+	import org.puremvc.as3.interfaces.IView;
 	import org.puremvc.as3.patterns.observer.Notification;
 
 	/**

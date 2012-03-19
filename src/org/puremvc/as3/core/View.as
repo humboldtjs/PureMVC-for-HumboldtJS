@@ -4,8 +4,10 @@
 */
 package org.puremvc.as3.core
 {
-
-	import org.puremvc.as3.interfaces.*;
+	import org.puremvc.as3.interfaces.IMediator;
+	import org.puremvc.as3.interfaces.INotification;
+	import org.puremvc.as3.interfaces.IObserver;
+	import org.puremvc.as3.interfaces.IView;
 	import org.puremvc.as3.patterns.observer.Observer;
 
 	/**

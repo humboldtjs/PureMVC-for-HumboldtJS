@@ -4,7 +4,8 @@
 */
 package org.puremvc.as3.patterns.observer
 {
-	import org.puremvc.as3.interfaces.*;
+	import org.puremvc.as3.interfaces.INotification;
+	import org.puremvc.as3.interfaces.IObserver;
 
 	/**
 	 * A base <code>IObserver</code> implementation.

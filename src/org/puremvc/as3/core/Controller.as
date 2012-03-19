@@ -4,9 +4,11 @@
 */
 package org.puremvc.as3.core
 {
-	import org.puremvc.as3.core.*;
-	import org.puremvc.as3.interfaces.*;
-	import org.puremvc.as3.patterns.observer.*;
+	import org.puremvc.as3.interfaces.ICommand;
+	import org.puremvc.as3.interfaces.IController;
+	import org.puremvc.as3.interfaces.INotification;
+	import org.puremvc.as3.interfaces.IView;
+	import org.puremvc.as3.patterns.observer.Observer;
 	
 	/**
 	 * A Singleton <code>IController</code> implementation.

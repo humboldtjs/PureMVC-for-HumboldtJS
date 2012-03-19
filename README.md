@@ -3,22 +3,17 @@ PureMVC for HumboldtJS
 
 ## What is it?
 
-HumboldtJS Library is the standard library to use with HumboldtJS. It is
-similar in function to the playerglobal.swc in Flash and provides standard
-things like a DisplayObject, a Stage, EventDispatcher and a number of
-utility classes to deal with the DOM.
-
-This library is essential when developing HumboldtJS applications.
+It is the AS3 version of PureMVC packaged as a HumboldtJS compatible library.
 
 ## What do I do with it?
 
-Usually you will only want the *bin/HumboldtJSLibrary.swc*,
-*lib/HumboldtJSDOM.swc* and *dom* folder and drop that into your project.
-You can safely ignore the rest of this repository. The rest is only needed
-if you want to fix bugs in the standard library or expand the functionality.
+Usually you will only want the *bin/PureMVC.swc* and drop that into your 
+existing HumboldtJS project. You can safely ignore the rest of this repository.
+The rest is only needed if you want to fix bugs or want to upgrade the PureMVC
+version or add a plugin.
 
 Unless you want to do these things you are probably better off starting with
-the HumboldJSEmpty project, so check that out first.
+the HumboldJSEmpty project, which already includes PureMVC, so check that out first.
 
 ## How to build it?
 

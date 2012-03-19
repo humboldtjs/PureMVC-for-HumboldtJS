@@ -4,8 +4,8 @@
 */
 package org.puremvc.as3.core
 {
-	
-	import org.puremvc.as3.interfaces.*;
+	import org.puremvc.as3.interfaces.IModel;
+	import org.puremvc.as3.interfaces.IProxy;
 	
 	/**
 	 * A Singleton <code>IModel</code> implementation.

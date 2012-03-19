@@ -4,9 +4,11 @@
 */
 package org.puremvc.as3.patterns.mediator
 {
-	import org.puremvc.as3.interfaces.*;
-	import org.puremvc.as3.patterns.observer.*;
+	import org.puremvc.as3.interfaces.IMediator;
+	import org.puremvc.as3.interfaces.INotification;
+	import org.puremvc.as3.interfaces.INotifier;
 	import org.puremvc.as3.patterns.facade.Facade;
+	import org.puremvc.as3.patterns.observer.Notifier;
 	
 	/**
 	 * A base <code>IMediator</code> implementation. 

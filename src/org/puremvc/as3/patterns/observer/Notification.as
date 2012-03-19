@@ -4,7 +4,7 @@
 */
 package org.puremvc.as3.patterns.observer
 {
-	import org.puremvc.as3.interfaces.*;
+	import org.puremvc.as3.interfaces.INotification;
 	
 	/**
 	 * A base <code>INotification</code> implementation.

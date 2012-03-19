@@ -4,9 +4,10 @@
 */
 package org.puremvc.as3.patterns.proxy
 {
-	import org.puremvc.as3.interfaces.*;
-	import org.puremvc.as3.patterns.observer.*;
+	import org.puremvc.as3.interfaces.INotifier;
+	import org.puremvc.as3.interfaces.IProxy;
 	import org.puremvc.as3.patterns.facade.Facade;
+	import org.puremvc.as3.patterns.observer.Notifier;
 	
 	/**
 	 * A base <code>IProxy</code> implementation. 
