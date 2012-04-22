@@ -17,15 +17,15 @@ package org.puremvc.as3.interfaces
 	 * <LI>Implement methods that are called when the IMediator is registered or removed from the View.</LI>
 	 * </UL>
 	 * <P>
-	 * Additionally, <code>IMediator</code>s typically:
+	 * Additionally, <code>IMediator</code>s typically:</P>
 	 * <UL>
 	 * <LI>Act as an intermediary between one or more view components such as text boxes or 
 	 * list controls, maintaining references and coordinating their behavior.</LI>
 	 * <LI>In Flash-based apps, this is often the place where event listeners are
 	 * added to view components, and their handlers implemented.</LI>
 	 * <LI>Respond to and generate <code>INotifications</code>, interacting with of 
-	 * the rest of the PureMVC app.
-	 * </UL></P>
+	 * the rest of the PureMVC app.</LI>
+	 * </UL>
 	 * <P>
 	 * When an <code>IMediator</code> is registered with the <code>IView</code>, 
 	 * the <code>IView</code> will call the <code>IMediator</code>'s 

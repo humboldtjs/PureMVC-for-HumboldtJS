@@ -30,8 +30,6 @@ package org.puremvc.as3.patterns.command
 	 * calling <code>addSubCommand</code> once for each <i>SubCommand</i>
 	 * to be executed.</P>
 	 * 
-	 * <P>
-	 * 
 	 * @see org.puremvc.as3.core.controller.Controller Controller
 	 * @see org.puremvc.as3.patterns.observer.Notification Notification
 	 * @see org.puremvc.as3.patterns.command.SimpleCommand SimpleCommand
@@ -81,7 +79,7 @@ package org.puremvc.as3.patterns.command
 		 * 
 		 * <P>
 		 * Note that <i>SubCommand</i>s may be any <code>ICommand</code> implementor,
-		 * <code>MacroCommand</code>s or <code>SimpleCommands</code> are both acceptable.
+		 * <code>MacroCommand</code>s or <code>SimpleCommands</code> are both acceptable.</P>
 		 */
 		protected function initializeMacroCommand():void
 		{
@@ -106,7 +104,7 @@ package org.puremvc.as3.patterns.command
 		 * 
 		 * <P>
 		 * The <i>SubCommands</i> will be called in First In/First Out (FIFO)
-		 * order. 
+		 * order. </P>
 		 * 
 		 * @param notification the <code>INotification</code> object to be passsed to each <i>SubCommand</i>.
 		 */

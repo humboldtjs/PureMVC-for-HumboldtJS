@@ -41,7 +41,7 @@ package org.puremvc.as3.patterns.command
 		 * Notify the parent <code>AsyncMacroCommand</code> that this command is complete.
 		 * <P>
 		 * Call this method from your subclass to signify that your asynchronous command
-		 * has finished.
+		 * has finished.</P>
 		 */
 		protected function commandComplete () : void
 		{

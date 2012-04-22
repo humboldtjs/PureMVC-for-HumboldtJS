@@ -39,6 +39,7 @@ package org.puremvc.as3.patterns.mediator
 
 		/**
 		 * Get the name of the <code>Mediator</code>.
+		 * 
 		 * @return the Mediator name
 		 */		
 		public function getMediatorName():String 
@@ -95,7 +96,7 @@ package org.puremvc.as3.patterns.mediator
 		 * <P>
 		 * Typically this will be handled in a switch statement,
 		 * with one 'case' entry per <code>INotification</code>
-		 * the <code>Mediator</code> is interested in.
+		 * the <code>Mediator</code> is interested in.</P>
 		 */ 
 		public function handleNotification( aNotification:INotification ):void {}
 		

@@ -18,7 +18,7 @@ package org.puremvc.as3.patterns.observer
 	 * be called when a particular <code>INotification</code> is broadcast. </P>
 	 * 
 	 * <P>
-	 * In PureMVC, the <code>Observer</code> class assumes these responsibilities:
+	 * In PureMVC, the <code>Observer</code> class assumes these responsibilities:</P>
 	 * <UL>
 	 * <LI>Encapsulate the notification (callback) method of the interested object.</LI>
 	 * <LI>Encapsulate the notification context (this) of the interested object.</LI>
