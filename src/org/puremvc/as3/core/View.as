@@ -1,135 +1,277 @@
+/*
+ PureMVC - Copyright(c) 2006-08 Futurescale, Inc., Some rights reserved.
+ Your reuse is governed by the Creative Commons Attribution 3.0 United States License
+*/
 package org.puremvc.as3.core
 {
-    import org.puremvc.as3.interfaces.IMediator;
-    import org.puremvc.as3.interfaces.INotification;
-    import org.puremvc.as3.interfaces.IObserver;
-    import org.puremvc.as3.interfaces.IView;
-    import org.puremvc.as3.patterns.observer.Observer;
 
-    public class View implements IView
-    {
-         // Mapping of Mediator names to Mediator instances
-        protected var mediatorMap : Array;
+	import dom.eventFunction;
+	
+	import org.puremvc.as3.interfaces.IMediator;
+	import org.puremvc.as3.interfaces.INotification;
+	import org.puremvc.as3.interfaces.IObserver;
+	import org.puremvc.as3.interfaces.IView;
+	import org.puremvc.as3.patterns.observer.Observer;
+	
+	/**
+	 * A Singleton <code>IView</code> implementation.
+	 * 
+	 * <P>
+	 * In PureMVC, the <code>View</code> class assumes these responsibilities:
+	 * <UL>
+	 * <LI>Maintain a cache of <code>IMediator</code> instances.</LI>
+	 * <LI>Provide methods for registering, retrieving, and removing <code>IMediators</code>.</LI>
+	 * <LI>Notifiying <code>IMediators</code> when they are registered or removed.</LI>
+	 * <LI>Managing the observer lists for each <code>INotification</code> in the application.</LI>
+	 * <LI>Providing a method for attaching <code>IObservers</code> to an <code>INotification</code>'s observer list.</LI>
+	 * <LI>Providing a method for broadcasting an <code>INotification</code>.</LI>
+	 * <LI>Notifying the <code>IObservers</code> of a given <code>INotification</code> when it broadcast.</LI>
+	 * </UL>
+	 * 
+	 * @see org.puremvc.as3.patterns.mediator.Mediator Mediator
+	 * @see org.puremvc.as3.patterns.observer.Observer Observer
+	 * @see org.puremvc.as3.patterns.observer.Notification Notification
+	 */
+	public class View implements IView
+	{
+		
+		/**
+		 * Constructor. 
+		 * 
+		 * <P>
+		 * This <code>IView</code> implementation is a Singleton, 
+		 * so you should not call the constructor 
+		 * directly, but instead call the static Singleton 
+		 * Factory method <code>View.getInstance()</code>
+		 * 
+		 * @throws Error Error if Singleton instance has already been constructed
+		 * 
+		 */
+		public function View( )
+		{
+			if (instance != null) throw Error(SINGLETON_MSG);
+			instance = this;
+			mediatorMap = new Array();
+			observerMap = new Array();	
+			initializeView();	
+		}
+		
+		/**
+		 * Initialize the Singleton View instance.
+		 * 
+		 * <P>
+		 * Called automatically by the constructor, this
+		 * is your opportunity to initialize the Singleton
+		 * instance in your subclass without overriding the
+		 * constructor.</P>
+		 * 
+		 * @return void
+		 */
+		protected function initializeView(  ) : void 
+		{
+		}
+	
+		/**
+		 * View Singleton Factory method.
+		 * 
+		 * @return the Singleton instance of <code>View</code>
+		 */
+		public static function getInstance() : IView 
+		{
+			if ( instance == null ) instance = new View( );
+			return instance;
+		}
+				
+		/**
+		 * Register an <code>IObserver</code> to be notified
+		 * of <code>INotifications</code> with a given name.
+		 * 
+		 * @param notificationName the name of the <code>INotifications</code> to notify this <code>IObserver</code> of
+		 * @param observer the <code>IObserver</code> to register
+		 */
+		public function registerObserver ( aNotificationName:String, aObserver:IObserver ) : void
+		{
+			var observers:Array = observerMap[ aNotificationName ];
+			if( observers ) {
+				observers.push( aObserver );
+			} else {
+				observerMap[ aNotificationName ] = [ aObserver ];	
+			}
+		}
 
-        // Mapping of Notification names to Observer lists
-        protected var observerMap	: Array;
+		/**
+		 * Notify the <code>IObservers</code> for a particular <code>INotification</code>.
+		 * 
+		 * <P>
+		 * All previously attached <code>IObservers</code> for this <code>INotification</code>'s
+		 * list are notified and are passed a reference to the <code>INotification</code> in 
+		 * the order in which they were registered.</P>
+		 * 
+		 * @param notification the <code>INotification</code> to notify <code>IObservers</code> of.
+		 */
+		public function notifyObservers( aNotification:INotification ) : void
+		{
+			if( observerMap[ aNotification.getName() ] != null ) {
+				
+				// Get a reference to the observers list for this notification name
+				var observers_ref:Array = (observerMap[ aNotification.getName() ]) as Array;
 
-        // Singleton instance
-        protected static var instance	: IView;
+				// Copy observers from reference array to working array, 
+				// since the reference array may change during the notification loop
+   				var observers:Array = new Array(); 
+   				var observer:IObserver;
+				for (var i:Number = 0; i < observers_ref.length; i++) { 
+					observer = (observers_ref[ i ]) as IObserver;
+					observers.push( observer );
+				}
+				
+				// Notify Observers from the working array				
+				for (i = 0; i < observers.length; i++) {
+					observer = (observers[ i ]) as IObserver;
+					observer.notifyObserver( aNotification );
+				}
+			}
+		}
 
-        // Message Constants
-        protected const SINGLETON_MSG	: String = "View Singleton already constructed!";
+		/**
+		 * Remove the observer for a given notifyContext from an observer list for a given Notification name.
+		 * <P>
+		 * @param notificationName which observer list to remove from 
+		 * @param notifyContext remove the observer with this object as its notifyContext
+		 */
+		public function removeObserver( aNotificationName:String, aNotifyContext:Object ):void
+		{
+			// the observer list for the notification under inspection
+			var observers:Array = (observerMap[ aNotificationName ]) as Array;
 
-        public function View( )
-        {
-            if ( instance != null ) {
-                throw Error( SINGLETON_MSG );
-            }
-            instance = this;
-            mediatorMap = [];
-            observerMap = [];
-            initializeView();
-        }
+			// find the observer for the notifyContext
+			for ( var i:int=0; i<observers.length; i++ ) 
+			{
+				var observer:Observer = observers[i];
+				if ( observer.compareNotifyContext( aNotifyContext ) == true ) {
+					// there can only be one Observer for a given notifyContext 
+					// in any given Observer list, so remove it and break
+					observers.splice(i,1);
+					break;
+				}
+			}
 
-        protected function initializeView(  ) : void
-        {
-        }
+			// Also, when a Notification's Observer list length falls to 
+			// zero, delete the notification key from the observer map
+			if ( observers.length == 0 ) {
+				delete observerMap[ aNotificationName ];		
+			}
+		} 
 
-        public static function getInstance() : IView
-        {
-            if ( instance == null ) instance = new View( );
-            return instance;
-        }
+		/**
+		 * Register an <code>IMediator</code> instance with the <code>View</code>.
+		 * 
+		 * <P>
+		 * Registers the <code>IMediator</code> so that it can be retrieved by name,
+		 * and further interrogates the <code>IMediator</code> for its 
+		 * <code>INotification</code> interests.</P>
+		 * <P>
+		 * If the <code>IMediator</code> returns any <code>INotification</code> 
+		 * names to be notified about, an <code>Observer</code> is created encapsulating 
+		 * the <code>IMediator</code> instance's <code>handleNotification</code> method 
+		 * and registering it as an <code>Observer</code> for all <code>INotifications</code> the 
+		 * <code>IMediator</code> is interested in.</p>
+		 * 
+		 * @param mediatorName the name to associate with this <code>IMediator</code> instance
+		 * @param mediator a reference to the <code>IMediator</code> instance
+		 */
+		public function registerMediator( aMediator:IMediator ) : void
+		{
+			// do not allow re-registration (you must to removeMediator fist)
+			if ( mediatorMap[ aMediator.getMediatorName() ] != null ) return;
+			
+			// Register the Mediator for retrieval by name
+			mediatorMap[ aMediator.getMediatorName() ] = aMediator;
+			
+			// Get Notification interests, if any.
+			var interests:Array = aMediator.listNotificationInterests();
 
-        public function registerObserver ( notificationName:String, observer:IObserver ) : void
-        {
-            var observers:Array = observerMap[ notificationName ];
-            if( observers ) {
-                observers.push( observer );
-            } else {
-                observerMap[ notificationName ] = [ observer ];
-            }
-        }
+			// Register Mediator as an observer for each of its notification interests
+			if ( interests.length > 0 ) 
+			{
+				// Create Observer referencing this mediator's handlNotification method
+				var observer:Observer = new Observer( eventFunction(aMediator, aMediator.handleNotification), aMediator );
 
-        public function notifyObservers( notification:INotification ):void
-        {
-            var tmp:Object = observerMap[ notification.getName() ];
-            if( tmp != null )
-            {
-                var observers_ref:Array = (tmp) as Array;
-                var theLength:int = observers_ref.length;
+				// Register Mediator as Observer for its list of Notification interests
+				for ( var i:Number=0;  i<interests.length; i++ ) {
+					registerObserver( interests[i],  observer );
+				}			
+			}
+			
+			// alert the mediator that it has been registered
+			aMediator.onRegister();
+			
+		}
 
-                var observer:IObserver;
-                for ( var i:int = 0; i < theLength; ++i ) {
-                    observer = (observers_ref[ i ]) as IObserver;
-                    observer.notifyObserver( notification );
-                }
-            }
-            //delete tmp;
-        }
+		/**
+		 * Retrieve an <code>IMediator</code> from the <code>View</code>.
+		 * 
+		 * @param mediatorName the name of the <code>IMediator</code> instance to retrieve.
+		 * @return the <code>IMediator</code> instance previously registered with the given <code>mediatorName</code>.
+		 */
+		public function retrieveMediator( aMediatorName:String ) : IMediator
+		{
+			return mediatorMap[ aMediatorName ];
+		}
 
-        public function removeObserver( notificationName:String, notifyContext:Object ):void
-        {
-            var observers:Array = (observerMap[ notificationName ]) as Array;
+		/**
+		 * Remove an <code>IMediator</code> from the <code>View</code>.
+		 * 
+		 * @param mediatorName name of the <code>IMediator</code> instance to be removed.
+		 * @return the <code>IMediator</code> that was removed from the <code>View</code>
+		 */
+		public function removeMediator( aMediatorName:String ) : IMediator
+		{
+			// Retrieve the named mediator
+			var mediator:IMediator = (mediatorMap[ aMediatorName ]) as IMediator;
+			
+			if ( mediator ) 
+			{
+				// for every notification this mediator is interested in...
+				var interests:Array = mediator.listNotificationInterests();
+				for ( var i:Number=0; i<interests.length; i++ ) 
+				{
+					// remove the observer linking the mediator 
+					// to the notification interest
+					removeObserver( interests[i], mediator );
+				}	
+				
+				// remove the mediator from the map		
+				delete mediatorMap[ aMediatorName ];
+	
+				// alert the mediator that it has been removed
+				mediator.onRemove();
+			}
+			
+			return mediator;
+		}
+		
+		/**
+		 * Check if a Mediator is registered or not
+		 * 
+		 * @param mediatorName
+		 * @return whether a Mediator is registered with the given <code>mediatorName</code>.
+		 */
+		public function hasMediator( aMediatorName:String ) : Boolean
+		{
+			return mediatorMap[ aMediatorName ] != null;
+		}
 
-            for ( var i: int = 0; i < observers.length; ++i )
-            {
-                var observer:Observer = observers[i];
-                if ( observer.compareNotifyContext( notifyContext )) {
-                    observers.splice(i,1);
-                    break;
-                }
-            }
-            if ( observers.length == 0 ) {
-                delete observerMap[ notificationName ];
-            }
-        }
+		// Mapping of Mediator names to Mediator instances
+		protected var mediatorMap : Array;
 
-        public function registerMediator( mediator:IMediator ) : void
-        {
-            if ( mediatorMap[ mediator.getMediatorName() ] != null ) {
-                return;
-            }
-            mediatorMap[ mediator.getMediatorName() ] = mediator;
+		// Mapping of Notification names to Observer lists
+		protected var observerMap	: Array;
+		
+		// Singleton instance
+		protected static var instance	: IView;
 
-            var interests:Array = mediator.listNotificationInterests();
-
-            if ( interests.length > 0 ) {
-                var observer:Observer = new Observer( mediator.handleNotification, mediator );
-
-                for ( var i:int = 0;  i < interests.length; ++i ) {
-                    registerObserver( interests[i],  observer );
-                }
-            }
-            mediator.onRegister();
-        }
-
-        public function retrieveMediator( mediatorName:String ) : IMediator
-        {
-            return mediatorMap[ mediatorName ];
-        }
-
-        public function removeMediator( mediatorName:String ) : IMediator
-        {
-            var mediator:IMediator = ( mediatorMap[ mediatorName ]) as IMediator;
-
-            if ( mediator )
-            {
-                var interests:Array = mediator.listNotificationInterests();
-                for ( var i:Number = 0; i < interests.length; ++i )
-                {
-                    removeObserver( interests[i], mediator );
-                }
-                delete mediatorMap[ mediatorName ];
-
-                mediator.onRemove();
-            }
-            return mediator;
-        }
-
-        public function hasMediator( mediatorName:String ) : Boolean
-        {
-            return mediatorMap[ mediatorName ] != null;
-        }
-    }
+		// Message Constants
+		protected static const SINGLETON_MSG	: String = "View Singleton already constructed!";
+	}
 }

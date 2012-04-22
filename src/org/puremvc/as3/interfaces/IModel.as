@@ -23,7 +23,8 @@ package org.puremvc.as3.interfaces
 	{
 		/**
 		 * Register an <code>IProxy</code> instance with the <code>Model</code>.
-		 *
+		 * 
+		 * @param proxyName the name to associate with this <code>IProxy</code> instance.
 		 * @param proxy an object reference to be held by the <code>Model</code>.
 		 */
 		function registerProxy( proxy:IProxy ) : void;

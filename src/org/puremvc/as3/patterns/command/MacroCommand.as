@@ -1,15 +1,15 @@
 /*
- PureMVC - Copyright(c) 2006-08 Futurescale, Inc., Some rights reserved.
- Your reuse is governed by the Creative Commons Attribution 3.0 United States License
+PureMVC - Copyright(c) 2006-08 Futurescale, Inc., Some rights reserved.
+Your reuse is governed by the Creative Commons Attribution 3.0 United States License
 */
 package org.puremvc.as3.patterns.command 
 {
-    import org.puremvc.as3.interfaces.ICommand;
-    import org.puremvc.as3.interfaces.INotification;
-    import org.puremvc.as3.interfaces.INotifier;
-    import org.puremvc.as3.patterns.observer.Notifier;
-
-    /**
+	import org.puremvc.as3.interfaces.ICommand;
+	import org.puremvc.as3.interfaces.INotification;
+	import org.puremvc.as3.interfaces.INotifier;
+	import org.puremvc.as3.patterns.observer.Notifier;
+	
+	/**
 	 * A base <code>ICommand</code> implementation that executes other <code>ICommand</code>s.
 	 *  
 	 * <P>
@@ -57,7 +57,7 @@ package org.puremvc.as3.patterns.command
 		{
 			super();
 			subCommands = new Array();
-			initializeMacroCommand();
+			initializeMacroCommand();			
 		}
 		
 		/**
@@ -96,9 +96,9 @@ package org.puremvc.as3.patterns.command
 		 * 
 		 * @param commandClassRef a reference to the <code>Class</code> of the <code>ICommand</code>.
 		 */
-		protected function addSubCommand( commandClassRef:Class ): void
+		protected function addSubCommand( aCommandClassRef:Class ): void
 		{
-			subCommands.push(commandClassRef);
+			subCommands.push(aCommandClassRef);
 		}
 		
 		/** 
@@ -110,14 +110,14 @@ package org.puremvc.as3.patterns.command
 		 * 
 		 * @param notification the <code>INotification</code> object to be passsed to each <i>SubCommand</i>.
 		 */
-		public final function execute( notification:INotification ) : void
+		public final function execute( aNotification:INotification ) : void
 		{
 			while ( subCommands.length > 0) {
 				var commandClassRef : Class = subCommands.shift();
 				var commandInstance : ICommand = new commandClassRef();
-				commandInstance.execute( notification );
+				commandInstance.execute( aNotification );
 			}
 		}
-								
+		
 	}
 }
