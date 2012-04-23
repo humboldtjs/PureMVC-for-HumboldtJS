@@ -45,7 +45,7 @@ package org.puremvc.as3.patterns.command
 		 */
 		protected function commandComplete () : void
 		{
-			onComplete.apply();
+			if(onComplete != null) onComplete.apply();
 		}
 		
 		private var onComplete	:	EventFunction;
