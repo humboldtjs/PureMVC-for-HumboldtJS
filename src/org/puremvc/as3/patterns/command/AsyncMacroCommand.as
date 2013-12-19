@@ -141,7 +141,7 @@ package org.puremvc.as3.patterns.command
 			if (subCommands.length > 0)
 			{
 				var commandClassRef:Class	=	subCommands.shift();
-				var commandInstance:ICommand	=	new commandClassRef() as ICommand;
+				var commandInstance:ICommand	=	(new commandClassRef()) as ICommand;
 				var isAsync:Boolean			=	commandInstance is IAsyncCommand;
 				
 				if (isAsync) (commandInstance as IAsyncCommand).setOnComplete(nextCommand);
