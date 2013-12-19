@@ -4,7 +4,7 @@
 */
 package org.puremvc.as3.interfaces
 {
-	import dom.domobjects.EventFunction;
+	
 	
 	/**
 	 * The interface definition for a PureMVC Observer.
@@ -55,7 +55,7 @@ package org.puremvc.as3.interfaces
 		 * 
 		 * @param notifyMethod the notification (callback) method of the interested object
 		 */
-		function setNotifyMethod( notifyMethod:EventFunction ):void;
+		function setNotifyMethod( notifyMethod:Function ):void;
 		
 		/**
 		 * Set the notification context.

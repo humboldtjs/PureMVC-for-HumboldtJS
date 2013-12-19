@@ -5,9 +5,6 @@
 */
 package org.puremvc.as3.patterns.command
 {
-	import dom.domobjects.EventFunction;
-	import dom.eventFunction;
-	
 	import org.puremvc.as3.interfaces.IAsyncCommand;
 	import org.puremvc.as3.interfaces.ICommand;
 	import org.puremvc.as3.interfaces.INotification;
@@ -113,7 +110,7 @@ package org.puremvc.as3.patterns.command
 		 * 
 		 * @param value		The <code>AsyncMacroCommand</code> method to call on completion
 		 */
-		public function setOnComplete ( aValue:EventFunction ) : void { onComplete = aValue; }
+		public function setOnComplete ( aValue:Function ) : void { onComplete = aValue; }
 		
 		
 		/** 
@@ -144,11 +141,11 @@ package org.puremvc.as3.patterns.command
 			if (subCommands.length > 0)
 			{
 				var commandClassRef:Class	=	subCommands.shift();
-				var commandInstance:Object	=	new commandClassRef();
+				var commandInstance:ICommand	=	new commandClassRef() as ICommand;
 				var isAsync:Boolean			=	commandInstance is IAsyncCommand;
 				
-				if (isAsync) IAsyncCommand( commandInstance ).setOnComplete( eventFunction(this, nextCommand) );
-				ICommand( commandInstance ).execute( note );
+				if (isAsync) (commandInstance as IAsyncCommand).setOnComplete(nextCommand);
+				commandInstance.execute( note );
 				if (!isAsync) nextCommand();
 			}
 			else
@@ -162,7 +159,7 @@ package org.puremvc.as3.patterns.command
 
 		private var subCommands		:	Array;
 		private var note			:	INotification;
-		private var onComplete		:	EventFunction;
+		private var onComplete		:	Function;
 
 	}
 }

@@ -4,8 +4,6 @@
 */
 package org.puremvc.as3.patterns.observer
 {
-	import dom.domobjects.EventFunction;
-	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.interfaces.IObserver;
 	
@@ -31,7 +29,7 @@ package org.puremvc.as3.patterns.observer
 	 */
 	public class Observer implements IObserver
 	{
-		private var notify:EventFunction;
+		private var notify:Function;
 		private var context:Object;
 	
 		/**
@@ -44,7 +42,7 @@ package org.puremvc.as3.patterns.observer
 		 * @param notifyMethod the notification method of the interested object
 		 * @param notifyContext the notification context of the interested object
 		 */
-		public function Observer( aNotifyMethod:EventFunction, aNotifyContext:Object ) 
+		public function Observer( aNotifyMethod:Function, aNotifyContext:Object ) 
 		{
 			setNotifyMethod( aNotifyMethod );
 			setNotifyContext( aNotifyContext );
@@ -58,7 +56,7 @@ package org.puremvc.as3.patterns.observer
 		 * 
 		 * @param notifyMethod the notification (callback) method of the interested object.
 		 */
-		public function setNotifyMethod( aNotifyMethod:EventFunction ):void
+		public function setNotifyMethod( aNotifyMethod:Function ):void
 		{
 			notify = aNotifyMethod;
 		}

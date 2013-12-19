@@ -5,8 +5,6 @@
 package org.puremvc.as3.core
 {
 
-	import dom.eventFunction;
-	
 	import org.puremvc.as3.interfaces.IMediator;
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.interfaces.IObserver;
@@ -195,7 +193,7 @@ package org.puremvc.as3.core
 			if ( interests.length > 0 ) 
 			{
 				// Create Observer referencing this mediator's handlNotification method
-				var observer:Observer = new Observer( eventFunction(aMediator, aMediator.handleNotification), aMediator );
+				var observer:Observer = new Observer( aMediator.handleNotification, aMediator );
 
 				// Register Mediator as Observer for its list of Notification interests
 				for ( var i:Number=0;  i<interests.length; i++ ) {

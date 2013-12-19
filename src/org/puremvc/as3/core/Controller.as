@@ -4,8 +4,6 @@
 */
 package org.puremvc.as3.core
 {
-	import dom.eventFunction;
-	
 	import org.puremvc.as3.interfaces.ICommand;
 	import org.puremvc.as3.interfaces.IController;
 	import org.puremvc.as3.interfaces.INotification;
@@ -138,7 +136,7 @@ package org.puremvc.as3.core
 		public function registerCommand( notificationName : String, commandClassRef : Class ) : void
 		{
 			if ( commandMap[ notificationName ] == null ) {
-				view.registerObserver( notificationName, new Observer( eventFunction(this, executeCommand), this ) );
+				view.registerObserver( notificationName, new Observer( executeCommand, this ) );
 			}
 			commandMap[ notificationName ] = commandClassRef;
 		}
